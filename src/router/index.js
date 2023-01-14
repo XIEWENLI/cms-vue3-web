@@ -1,6 +1,9 @@
 import * as VueRouter from "vue-router";
 
 import localCache from "../utils/cache";
+import XWLRequest from "../servise/index";
+import { showNotify } from "vant";
+import "vant/es/notify/style";
 
 const routes = [
   { path: "/", redirect: "/main/photo" },
@@ -52,7 +55,7 @@ const router = VueRouter.createRouter({
   routes,
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
   let userInfo2 = localCache.getCache("userInfo2");
   userInfo2 = userInfo2 === undefined ? undefined : JSON.parse(userInfo2);
 
@@ -60,9 +63,16 @@ router.beforeEach((to, from) => {
     if (userInfo2 === undefined) {
       return "/login";
     }
-  }
 
-  // return true;
+    // token验证
+    const res = await XWLRequest.get({ url: "/auth/verifyToken" });
+
+    if (!res.data.status) {
+      showNotify(res.data.message);
+      localCache.deleteCache("userInfo");
+      return "/login";
+    }
+  }
 });
 
 export default router;

@@ -93,6 +93,7 @@ const getFileInfo = async (limit = 10, offset = 0) => {
 
   if (!res.data.status) {
     showNotify(res.data.message);
+    return
   }
 
   // 筛选出符合当前用户的file 
