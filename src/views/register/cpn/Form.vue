@@ -49,7 +49,7 @@ const onSubmit = async () => {
   } else {
     const rl = /^[\da-z]+$/i
     if (!rl.test(username.value)) {
-      showNotify('用户名由字母或数字组成');
+      showNotify('用户名由字母或数字组成~');
       return
     }
     const res = await XWLRequest.post({ url: "/user/register2", data: { username: username.value, password: password.value } })
