@@ -42,7 +42,7 @@ const onSubmit = async () => {
     showNotify('用户名和密码的长度为5-10~');
   } else {
     const rl = /^[\da-z]+$/i
-    if (rl.test(username.value)) {
+    if (!rl.test(username.value)) {
       showNotify('用户名由字母或数字组成');
       return
     }

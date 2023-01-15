@@ -48,7 +48,7 @@ const onSubmit = async () => {
     showNotify('密码和重复密码不一致~');
   } else {
     const rl = /^[\da-z]+$/i
-    if (rl.test(username.value)) {
+    if (!rl.test(username.value)) {
       showNotify('用户名由字母或数字组成');
       return
     }
