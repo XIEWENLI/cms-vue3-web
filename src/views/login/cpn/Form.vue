@@ -41,6 +41,11 @@ const onSubmit = async () => {
   if (username.value.length < 5 || username.value.length > 10 || password.value.length < 5 || password.value.length > 10) {
     showNotify('用户名和密码的长度为5-10~');
   } else {
+    const rl = /^[\da-z]+$/i
+    if (rl.test(username.value)) {
+      showNotify('用户名由字母或数组组成');
+      return
+    }
     const res = await XWLRequest.post({ url: "/user/login2", data: { username: username.value, password: password.value } })
 
     if (!res.data.status) {
