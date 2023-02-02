@@ -59,17 +59,23 @@ router.beforeEach(async (to, from) => {
   let userInfo2 = localCache.getCache("userInfo2");
   userInfo2 = userInfo2 === undefined ? undefined : JSON.parse(userInfo2);
 
-  if (to.path !== "/login" && to.path !== "/register") {
+  if (to.path === "/login" || to.path === "/register") {
+    return true;
+  } else {
     if (userInfo2 === undefined) {
       return "/login";
     }
 
     // token验证
-    const res = await XWLRequest.get({ url: "/auth/verifyToken" });
+    const res = await XWLRequest.get({
+      url: "/auth/verifyToken",
+      params: { isUser: "user" },
+    });
 
     if (!res.data.status) {
       showNotify(res.data.message);
       localCache.deleteCache("userInfo");
+      userInfo2 = "";
       return "/login";
     }
   }

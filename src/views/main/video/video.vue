@@ -24,7 +24,10 @@
 
       <!-- file展示弹窗 -->
       <van-popup v-model:show="showCenter">
-        <img style="width: 20rem" :src="imageSrc" alt="错误">
+        <video style="width: 20rem" :src="imageSrc" controls="controls">
+          <source :src="imageSrc" type="video/mp4">
+          您的浏览器不支持 HTML5 video 标签。
+        </video>
       </van-popup>
 
       <!-- file展示弹窗2——上传页面 -->

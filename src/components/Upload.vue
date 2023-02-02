@@ -185,4 +185,9 @@ onMounted(() => {
   justify-content: space-around;
   margin: 5px;
 }
+
+progress {
+  display: block !important;
+  margin: 0 0 5px 10px;
+}
 </style>

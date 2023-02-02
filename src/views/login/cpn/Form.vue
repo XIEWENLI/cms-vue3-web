@@ -31,7 +31,7 @@ import 'vant/es/notify/style'
 
 const router = useRouter()
 
-// 注册
+// 登录
 const username = ref('');
 const password = ref('');
 const onSubmit = async () => {
