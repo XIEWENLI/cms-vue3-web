@@ -88,14 +88,14 @@ onMounted(() => {
 
         // 获取已上传切片数组（断点续传）
         try {
-          const { data: fileSliceArr } = await XWLRequest.get({ url: "/file/getFileSlice", params: { hash, suffix } });
+          const { data: fileSliceArr } = await XWLRequest.get({ url: "/file/getFileSlice", params: { hash, suffix, isUser: 'user' } });
 
           // 排除已经上传的（断点续传）
           fileChunks = fileChunks.filter((item) => {
             return !fileSliceArr.includes(item.hash);
           });
         } catch (err) {
-          console.log("获取已上传切片失败的原因：" + err.response.data);
+          console.log("获取已上传切片失败的原因：" + err);
         }
 
         // 遍历上传每一片
@@ -117,7 +117,7 @@ onMounted(() => {
 
           promiseArr.push(
             axios
-              .post(`${baseURL}/file/uploadFileSlice?token=${token}`, formData).then((res) => {
+              .post(`${baseURL}/file/uploadFileSlice?token=${token}&isUser='user'`, formData).then((res) => {
                 // 进度条-控制一个文件时
                 if (fileInfos.length === 1) {
                   progressVal += 1;
@@ -140,7 +140,7 @@ onMounted(() => {
 
             // 合并切片
             let fileName = inputVal.value;
-            XWLRequest.get({ url: '/file/mergeFile', params: { hash, fileName, suffix, type, len: index, fileSize } }).then((res) => {
+            XWLRequest.get({ url: '/file/mergeFile', params: { hash, fileName, suffix, type, len: index, fileSize, isUser: 'user' } }).then((res) => {
               inputVal.value = ''
 
               if (
@@ -187,7 +187,6 @@ onMounted(() => {
 }
 
 progress {
-  display: block !important;
-  margin: 0 0 5px 10px;
+  margin: 5px 0 5px 10px;
 }
 </style>

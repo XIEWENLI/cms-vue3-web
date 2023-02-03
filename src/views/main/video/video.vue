@@ -24,7 +24,7 @@
 
       <!-- file展示弹窗 -->
       <van-popup v-model:show="showCenter">
-        <video style="width: 20rem" :src="imageSrc" controls="controls">
+        <video style="width: 21rem" :src="imageSrc" controls="controls">
           <source :src="imageSrc" type="video/mp4">
           您的浏览器不支持 HTML5 video 标签。
         </video>
@@ -78,7 +78,7 @@ const showPopup2 = (src) => {
 
 // 获取总数量
 const geuSum = async () => {
-  const res = await XWLRequest.get({ url: '/file/getFileInfo', params: { type: 'video', tableName: 'file', web: 1 } })
+  const res = await XWLRequest.get({ url: '/file/getFileInfo', params: { type: 'video', tableName: 'file', web: 1, isUser: 'user' } })
 
   if (!res.data.status) {
     showNotify(res.data.message);
@@ -92,7 +92,7 @@ geuSum()
 let fileInfo = ref([])
 const getFileInfo = async (limit = 10, offset = 0) => {
   fileInfo.value = []
-  const res = await XWLRequest.get({ url: '/file/getFileInfo', params: { type: 'video', limit, offset, web: 1 } })
+  const res = await XWLRequest.get({ url: '/file/getFileInfo', params: { type: 'video', limit, offset, web: 1, isUser: 'user' } })
 
   if (!res.data.status) {
     showNotify(res.data.message);
@@ -102,7 +102,7 @@ const getFileInfo = async (limit = 10, offset = 0) => {
   // 筛选出符合当前用户的file 
   res.data.message.forEach(item => {
     if (item.user_id === user_id) {
-      item.src = `${baseURL}/file/downloadFile?file_id=${item.id}&token=${token}`
+      item.src = `${baseURL}/file/downloadFile?file_id=${item.id}&token=${token}&isUser='user'`
       fileInfo.value.push(item)
     }
   });
@@ -135,14 +135,14 @@ const downloadFile = async ({ id: file_id, fileName, type, user_id }) => {
 
   const a = document.createElement('a')
   a.download = 'xiazai'
-  a.href = `${baseURL}/file/downloadFile?file_id=${file_id}&user_id=${user_id}&fileName=${fn}&token=${token}`
+  a.href = `${baseURL}/file/downloadFile?file_id=${file_id}&user_id=${user_id}&fileName=${fn}&token=${token}&isUser= 'user'`
   a.click();
 }
 // 删除文件
 const deleteFile = async ({ id: file_id }) => {
   let url = 'upload/uploadVideo/videos'
 
-  const res = await XWLRequest.get({ url: "/file/deleteFile", params: { file_id, userName, url } })
+  const res = await XWLRequest.get({ url: "/file/deleteFile", params: { file_id, userName, url, isUser: 'user' } })
 
   if (!res.data.status) {
     showNotify(res.data.message);
