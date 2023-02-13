@@ -26,11 +26,12 @@
           :items-per-page="10" />
       </div>
 
-      <!-- file展示弹窗——上传页面 -->
-      <van-popup v-model:show="showCenter">
-        <Uplaod :accept="accept" @againRequest="againRequest" />
-      </van-popup>
     </van-pull-refresh>
+
+    <!-- file展示弹窗——上传页面 -->
+    <van-popup v-model:show="showCenter">
+      <Uplaod :accept="accept" @againRequest="againRequest" />
+    </van-popup>
 
     <!-- 上传按钮 -->
     <van-action-bar class="upload" v-if="!loading">
