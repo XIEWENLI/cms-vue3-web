@@ -23,16 +23,17 @@
           :items-per-page="10" />
       </div>
 
-      <!-- file展示弹窗 -->
-      <van-popup v-model:show="showCenter">
-        <img style="width: 21rem;height: 12.5rem;" :src="imageSrc" alt="错误">
-      </van-popup>
-
-      <!-- file展示弹窗2——上传页面 -->
-      <van-popup v-model:show="showCenter2">
-        <Uplaod :accept="accept" @againRequest="againRequest" />
-      </van-popup>
     </van-pull-refresh>
+
+    <!-- file展示弹窗 -->
+    <van-popup v-model:show="showCenter">
+      <img style="width: 21rem;height: 12.5rem;" :src="imageSrc" alt="错误">
+    </van-popup>
+
+    <!-- file展示弹窗2——上传页面 -->
+    <van-popup v-model:show="showCenter2">
+      <Uplaod :accept="accept" @againRequest="againRequest" />
+    </van-popup>
 
     <!-- 上传按钮 -->
     <van-action-bar class="upload" v-if="!loading">
