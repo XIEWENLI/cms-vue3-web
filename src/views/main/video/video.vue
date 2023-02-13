@@ -6,7 +6,10 @@
         <ul v-for="item in fileInfo" :key="item.id">
           <li>
             <div>
-              <video width="160" height="120" :src="item.src" @click="showPopup(item.src)" />
+              <video class="vd" controls="controls">
+                <source :src="item.src" type="video/mp4">
+                您的浏览器不支持 HTML5 video 标签。
+              </video>
             </div>
             <div style="display: flex;justify-content: space-between;margin-top: 0.2rem;">
               <van-button type="default" size="small" @click="downloadFile(item)">下载</van-button>
@@ -22,23 +25,15 @@
           :items-per-page="10" />
       </div>
 
-      <!-- file展示弹窗 -->
+      <!-- file展示弹窗——上传页面 -->
       <van-popup v-model:show="showCenter">
-        <video style="width: 21rem" :src="imageSrc" controls="controls">
-          <source :src="imageSrc" type="video/mp4">
-          您的浏览器不支持 HTML5 video 标签。
-        </video>
-      </van-popup>
-
-      <!-- file展示弹窗2——上传页面 -->
-      <van-popup v-model:show="showCenter2">
         <Uplaod :accept="accept" @againRequest="againRequest" />
       </van-popup>
     </van-pull-refresh>
 
     <!-- 上传按钮 -->
     <van-action-bar class="upload" v-if="!loading">
-      <van-action-bar-button type="danger" text="上传" @click="showPopup2" />
+      <van-action-bar-button type="danger" text="上传" @click="showPopup" />
     </van-action-bar>
   </div>
 </template>
@@ -68,14 +63,6 @@ const showPopup = (src) => {
   showCenter.value = true;
 };
 
-// 弹窗2
-const imageSrc2 = ref()
-const showCenter2 = ref(false);
-const showPopup2 = (src) => {
-  imageSrc2.value = src
-  showCenter2.value = true;
-};
-
 // 获取总数量
 const geuSum = async () => {
   const res = await XWLRequest.get({ url: '/file/getFileInfo', params: { type: 'video', tableName: 'file', web: 1, isUser: 'user' } })
@@ -99,10 +86,10 @@ const getFileInfo = async (limit = 10, offset = 0) => {
     return
   }
 
-  // 筛选出符合当前用户的file 
+  // 筛选出符合当前用户的file
   res.data.message.forEach(item => {
     if (item.user_id === user_id) {
-      item.src = `${baseURL}/file/downloadFile?file_id=${item.id}&token=${token}&isUser='user'`
+      item.src = `${baseURL}/file/getFile?file_id=${item.id}&token=${token}&isUser='user'`
       fileInfo.value.push(item)
     }
   });
@@ -155,7 +142,7 @@ const deleteFile = async ({ id: file_id }) => {
 // 上传后刷新页面
 const againRequest = () => {
   getFileInfo(10, (currentPage.value - 1) * 10)
-  showCenter2.value = false
+  showCenter.value = false
 }
 
 
@@ -185,6 +172,11 @@ ul li {
 
 .fy {
   margin-bottom: 8rem;
+}
+
+.vd {
+  width: 20rem;
+  height: 180px;
 }
 
 .upload {
