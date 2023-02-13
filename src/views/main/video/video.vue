@@ -13,6 +13,7 @@
             </div>
             <div style="display: flex;justify-content: space-between;margin-top: 0.2rem;">
               <van-button type="default" size="small" @click="downloadFile(item)">下载</van-button>
+              <div class="fileName">{{ item.fileName }}</div>
               <van-button type="warning" size="small" @click="deleteFile(item)">删除</van-button>
             </div>
           </li>
@@ -185,5 +186,14 @@ ul li {
   background-color: transparent;
   width: 40%;
   margin-left: 30%;
+}
+
+.fileName {
+  width: 10rem;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
 }
 </style>
