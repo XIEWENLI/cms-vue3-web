@@ -6,10 +6,11 @@
         <ul v-for="item in fileInfo" :key="item.id">
           <li>
             <div>
-              <van-image width="160" height="120" :src="item.src" @click="showPopup(item.src)" />
+              <van-image class="pt" :src="item.src" @click="showPopup(item.src)" />
             </div>
             <div style="display: flex;justify-content: space-between;margin-top: 0.2rem;">
               <van-button type="default" size="small" @click="downloadFile(item)">下载</van-button>
+              <div class="fileName">{{ item.fileName }}</div>
               <van-button type="warning" size="small" @click="deleteFile(item)">删除</van-button>
             </div>
           </li>
@@ -24,7 +25,7 @@
 
       <!-- file展示弹窗 -->
       <van-popup v-model:show="showCenter">
-        <img style="width: 21rem" :src="imageSrc" alt="错误">
+        <img style="width: 21rem;height: 12.5rem;" :src="imageSrc" alt="错误">
       </van-popup>
 
       <!-- file展示弹窗2——上传页面 -->
@@ -190,5 +191,19 @@ ul li {
   background-color: transparent;
   width: 40%;
   margin-left: 30%;
+}
+
+.pt {
+  width: 10rem;
+  height: 120px;
+}
+
+.fileName {
+  width: 4rem;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
 }
 </style>
