@@ -125,7 +125,7 @@ onMounted(() => {
                 }
               })
               .catch((err) => {
-                console.log("切片上传失败的原因：" + err.response.data);
+                console.log("切片上传失败的原因：" + err);
               })
           );
         });
@@ -158,7 +158,7 @@ onMounted(() => {
               console.log(res.data.file);
             })
               .catch((err) => {
-                console.log("合并切片失败的原因：" + err.response.data);
+                console.log("合并切片失败的原因：" + err);
               });
           })
           .catch((err) => {

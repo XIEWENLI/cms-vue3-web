@@ -99,7 +99,7 @@ const getFileInfo = async (limit = 10, offset = 0) => {
   // 筛选出符合当前用户的file 
   res.data.message.forEach(item => {
     if (item.user_id === user_id) {
-      item.src = `${baseURL}/file/downloadFile?file_id=${item.id}&token=${token}&isUser='user'`
+      item.src = `${baseURL}/file/getFile?file_id=${item.id}&token=${token}&isUser='user'`
       fileInfo.value.push(item)
     }
   });
@@ -152,7 +152,7 @@ const deleteFile = async ({ id: file_id }) => {
 // 上传后刷新页面
 const againRequest = () => {
   getFileInfo(10, (currentPage.value - 1) * 10)
-  showCenter2.value = false
+  showCenter.value = false
 }
 
 
